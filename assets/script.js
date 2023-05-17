@@ -9,6 +9,7 @@ var symbols = " !#$%&'()*+,\\-\"./:;<=>?@[\]^_`{|}~";
 function generatePassword() {
   var newPass = '';
   var passPool = '';
+  var count = 0;
   // I am presented with a series of prompts for password criteria
   var passLength = Number(prompt("How many Characters would you like your password to be?"));
   var minLength = passLength < 8;
@@ -26,15 +27,23 @@ function generatePassword() {
   // assign confirmed characters into charArray
   if (confirm("Would you like to use UPPERCASE letters?")) {
     passPool += letters.toUpperCase();
+    newPass += letters[Math.floor(Math.random() * letters.length)].toUpperCase();
+    count++;
   }
   if (confirm("Would you like to use LOWERCASE letters?")) {
     passPool += letters;
+    newPass += letters[Math.floor(Math.random() * letters.length)];
+    count++;
   }
   if (confirm("Would you like to use NUMBERS?")) {
     passPool += '1234567890';
+    newPass += Math.floor(Math.random() * 10);
+    count++;
   }
   if (confirm("Would you like to use SPECIAL characers?")) {
     passPool += symbols;
+    newPass += symbols[Math.floor(Math.random()* symbols.length)]
+    count++;
   }
   if (passPool.length === 0) {
     alert("Password must contain at least 1 character type. Please try again")
@@ -42,17 +51,15 @@ function generatePassword() {
     return
   }
 
-  for (var i = 0; i < passLength; i++) {
+  for (var i = count; i < passLength; i++) {
     var randomChar = function () {
       return Math.floor(Math.random() * passPool.length);
     }
     newPass += passPool[randomChar()];
   }
-
-
+  
   return newPass;
 }
-
 
 function writePassword() {
   var password = generatePassword();
